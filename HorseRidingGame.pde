@@ -2,7 +2,7 @@ import processing.serial.*;
 import cc.arduino.*;
 import ddf.minim.*;
 
-//Arduino arduino;
+Arduino arduino;
 Minim minim;
 AudioPlayer player;
 AudioSnippet sound1, sound2;
@@ -72,8 +72,8 @@ public void init() {
 }
 
 void setup() {
-  //size(displayWidth, displayHeight, P3D);
-  size(800, 600, P3D);
+  size(displayWidth, displayHeight, P3D);
+  //size(800, 600, P3D);
   
   frame.setLocation(0,0);
   
@@ -109,7 +109,7 @@ void setup() {
   
   starXZ();
   
-  //arduino = new Arduino(this, Arduino.list()[5]);
+  arduino = new Arduino(this, Arduino.list()[5]);
   minim = new Minim(this);
   player = minim.loadFile("BGM.mp3");
   player.loop();
@@ -138,7 +138,7 @@ void draw() {
   game(gameStart);
   
   
-  //sensor();
+  sensor();
   
   //最前面に表示
   beginCamera();
@@ -194,10 +194,10 @@ public void keyPressed() {
 
 public void keyReleased() {
   if(key == 'w') {
-    moveUP = false;
+    //moveUP = false;
     //moveZ = 0;
   }else if(key == 's') {
-    moveDOWN = false;
+    //moveDOWN = false;
     //moveZ = 0;
   }else if(key == 'a') {
     moveLEFT = false;
@@ -209,8 +209,8 @@ public void keyReleased() {
 }
 
 public void cameraUpdate() { //視点移動用関数
-  int diffX = mouseX - width/2;
-  //int diffX = ad;
+  //int diffX = mouseX - width/2;
+  int diffX = ad;
   if(diffX > 300) diffX = 300;
   if(diffX < -300) diffX = -300;
   //int diffY = mouseY - width/2;
@@ -234,14 +234,12 @@ public void cameraUpdate() { //視点移動用関数
     tz = -cameraDistance * cos(radians(angle)) + z;
     
   }
-  if(abs(diffY) > stillBox) {
+  /*if(abs(diffY) > stillBox) {
     ty += diffY/(sensitivity/1.5);
-  }
-  /*
+  }*/
   if(moveUP == true) {
     ty += diffY/(sensitivity/1.5);
   }
-  */
 }
 
 public float correctAngle(float xc, float zc) {
@@ -315,7 +313,7 @@ public void jumpManager(int magnitude) { //ジャンプ
   }
   y += vY; 
 }
-/*
+
 public void sensor() {
   for(int i = 0; i < NUM; i++) {
     sensors[i] = arduino.analogRead(i);
@@ -373,7 +371,6 @@ public void sensor() {
     moveUP = true;
   }
 }
-*/
 
 void game(boolean start) {
   if(start == false) {
